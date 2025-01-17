@@ -8,6 +8,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score, roc_auc_score
 from sklearn.metrics import confusion_matrix
 
+
+
 #Importing all the available csv file
 df1=pd.DataFrame()
 df1=pd.read_csv('/kaggle/input/disease-symptom-description-dataset/Symptom-severity.csv')
@@ -17,6 +19,9 @@ df3=pd.DataFrame()
 df3=pd.read_csv('/kaggle/input/disease-symptom-description-dataset/symptom_Description.csv')
 df4=pd.DataFrame()
 df4=pd.read_csv('/kaggle/input/disease-symptom-description-dataset/symptom_precaution.csv')
+
+
+
 
 #Visualizing each of the dataframe 
 df1.head()
@@ -31,6 +36,8 @@ df3.tail()
 df4.head()
 df4.tail()
 
+
+
 #Getting the overall discription of the model
 df1.info()
 df2.info()
@@ -40,13 +47,14 @@ df4.info()
 len(df2['Disease'].unique()) #Total number of unique disease
 
 
+
+
+
 # Cleaning and processing of data
 #DataFrame with name: dataset.csv or df2 (as in code included)
 for col in df2.columns:
     df2[col] = df2[col].str.replace('_',' ') #Replacing all the underscore with blank space in all the columns
 df2.head()
-
-
 
 # Plotting a graph for NaN values
 null_count = df2.isnull().sum()
@@ -60,7 +68,6 @@ plt.ylabel('Count of Null Values')
 plt.margins(0.1)
 plt.tight_layout()
 plt.show()
-
 
 # Removing trailing space
 cols = df2.columns
@@ -78,12 +85,17 @@ df.head()
 df = df.fillna(0)
 df.head()
 
+
+
+
 # Sympton severity rank
 df1['Symptom'] = df1['Symptom'].str.replace('_',' ')
 df1.head()
 
 df1['Symptom'].unique()
 len(df1['Symptom'].unique()) #Unique number of Symptoms present in dataset
+
+
 
 #Enconding symptoms in data with symptoms rank
 cols = df.columns
@@ -104,9 +116,10 @@ d = d.replace('spotting  urination',0)
 df = d.replace('foul smell of urine',0)
 df.head(10)
 
+
+
 print("Number of symptoms used to identify the disease ",len(df1['Symptom'].unique()))
 print("Number of diseases that can be identified ",len(df['Disease'].unique()))
-
 data = df.drop(columns=['Disease']).to_numpy()
 labels= df['Disease'].to_numpy()
 
@@ -131,6 +144,8 @@ print('ROC-AUC Score =', roc_auc_score(y_test, probas_, average='macro', multi_c
 # Printing confusion matrix
 print("Confusion matrix:")
 print(confusion_matrix(y_test,predicts))
+
+
 
 
 #Code for individual input
@@ -166,9 +181,15 @@ def predd(S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16,
         print("Predicted disease not found in the disease list.")
 
 
+
+
+
 # Printing all the available symptoms
 sympList=df1["Symptom"].to_list()
 print(sympList)
+
+
+
 
 predd(sympList[7],sympList[5],sympList[2],sympList[80],0,0,0,0,0,0,0,0,0,0,0,0,0) #Manual Input 1
 predd(sympList[8],sympList[5],sympList[2],sympList[80],0,0,0,0,0,0,0,0,0,0,0,0,0) #Manual input 2
