@@ -158,8 +158,7 @@ def predd(S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16,
     symptom_to_weight = dict(zip(df1["Symptom"], df1["weight"]))
     psymptoms = [symptom_to_weight.get(symptom, 0) for symptom in psymptoms]
     print("Mapped symptoms to weights:", psymptoms)
-
-    # Ensure input is 2D for the model
+      # Ensure input is 2D for the model
     psy = np.array([psymptoms])  # Ensure 2D array
     
     #Predict disease
@@ -168,6 +167,7 @@ def predd(S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16,
     
     print("Predicted disease:", pred[0])
     print("Predicted probabilities:", probas_)
+    
     disease = np.array(df3["Disease"])
     if pred[0] in disease:
         j = np.where(disease == pred[0])[0][0]
@@ -175,7 +175,11 @@ def predd(S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15, S16,
         confidence = probas_[0][class_index]
         
         print("Confidence level for prediction:", confidence)
-        precaution = df4.iloc[j, 1:]
+
+        description = str(df3.loc[j, 'Description']).strip()  # Strip any leading/trailing spaces
+        print(f"Description: {description}")
+        
+        precaution = df4.iloc[j,1:]
         print(precaution)
     else:
         print("Predicted disease not found in the disease list.")
